@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'min/production.min.js': ['public/lib/*.js']
+          'min/production.min.js': ['public/lib/underscore.js', 'public/lib/jquery.js', 'public/lib/handlebars.js', 'public/lib/backbone.js' ]
         }
       }
     },
