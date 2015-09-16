@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'prod/lib/production.min.js': ['public/lib/*.js']
+          'prod/lib/production.min.js': ['public/lib/backbone.js', 'public/lib/handlebars.js', 'public/lib/jquery.js', 'public/lib/underscore.js' ]
         }
       }
     },
@@ -125,7 +125,8 @@ module.exports = function(grunt) {
         command:[ 
         'git add .',
         'git commit -m "AUTOMATED DEPLOYMENT TO PRODUCTION"',
-        'git push azure master'
+        'git push azure master',
+        'asdf1234'
         ].join('&&')
       }
     },
@@ -171,7 +172,7 @@ module.exports = function(grunt) {
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       // add your production server task here
-      grunt.task.run([ 'shell'])
+      grunt.task.run([ 'shell' ])
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
