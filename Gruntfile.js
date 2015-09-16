@@ -2,15 +2,26 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    concat: {
-    },
+    //DUPLICATED FUNCTIONALITY WITH UGLIFY
+    // concat: {
+      // options: {
+      //   separator: ';'
+      // },
+
+      // dist: {
+      //   src: [
+      //     'public/lib/*.js'
+      //   ],
+      //   dest: 'prod/lib/production.js'
+      // }
+    // },
 
     mochaTest: {
       test: {
         options: {
           reporter: 'spec'
         },
-        src: ['test/**/*.js']
+        src: ['test/*.js']
       }
     },
 
@@ -21,24 +32,73 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      options: {
+        banner: '/*\n <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> \n*/\n'
+      },
+      build: {
+        files: {
+          'prod/lib/production.min.js': ['public/lib/*.js']
+        }
+      }
     },
 
     jshint: {
       files: [
         // Add filespec list here
+        'public/**/client/*.js',
+        'test/*.js',
+        'lib/*.js',
+        'app/**/*.js',
+        'app/*.js',
+        '**.js'
       ],
       options: {
         force: 'true',
         jshintrc: '.jshintrc',
         ignores: [
-          'public/lib/**/*.js',
-          'public/dist/**/*.js'
+          'public/lib/*/*.js',
+          'public/dist/**/*.js',
         ]
       }
     },
 
     cssmin: {
-        // Add filespec list here
+        options: {
+        banner: '/*\n <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> \n*/\n'
+      },
+      build: {
+        files: {
+          'prod/style.min.css': 'public/style.css'
+        }
+      }
+    },
+
+    'string-replace': {
+      inline: {
+        files: {
+          'views/layout.ejs': 'views/layout.ejs'
+        },
+        options: {
+          replacements: [
+              {
+                  pattern: '<!--start PROD imports',
+                  replacement: '<!--start PROD imports-->'
+              },
+              {
+                  pattern: 'end PROD imports-->',
+                  replacement: '<!--end PROD imports-->'
+              },
+              {
+                  pattern: '<!--start DEV imports-->',
+                  replacement: '<!--start DEV imports'
+              },
+              {
+                  pattern: '<!--end DEV imports-->',
+                  replacement: 'end DEV imports-->'
+              }
+          ]
+        }
+      }
     },
 
     watch: {
@@ -48,8 +108,10 @@ module.exports = function(grunt) {
           'public/lib/**/*.js',
         ],
         tasks: [
-          'concat',
-          'uglify'
+          // 'concat',
+          'uglify',
+          'string-replace',
+          'mochaTest'
         ]
       },
       css: {
@@ -60,6 +122,11 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
+        command:[ 
+        'git add .',
+        'git commit -m "AUTOMATED DEPLOYMENT TO PRODUCTION"',
+        'git push azure master'
+        ].join('&&')
       }
     },
   });
@@ -67,7 +134,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-string-replace');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
@@ -91,15 +158,20 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
-    'mochaTest'
+    'mochaTest',
+    'jshint'
   ]);
 
   grunt.registerTask('build', [
+    'uglify',
+    'cssmin',
+    'string-replace'
   ]);
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
       // add your production server task here
+      grunt.task.run([ 'shell'])
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
@@ -107,6 +179,9 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
       // add your production server task here
+      'test',
+      'build',
+      'upload'
   ]);
 
 

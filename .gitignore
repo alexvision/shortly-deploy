@@ -8,6 +8,8 @@ db/shortly.sqlite
 node_modules
 public/dist
 
+prod/lib
+
 # Icon must ends with two \r.
 Icon
 
