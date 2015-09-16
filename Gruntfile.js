@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'prod/lib/production.min.js': ['public/lib/*.js']
+          'min/production.min.js': ['public/lib/*.js']
         }
       }
     },
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'prod/style.min.css': 'public/style.css'
+          'min/style.min.css': 'public/style.css'
         }
       }
     },
@@ -81,20 +81,20 @@ module.exports = function(grunt) {
         options: {
           replacements: [
               {
-                  pattern: '<!--start PROD imports',
+                  pattern: '<!--start PROD imports ',
                   replacement: '<!--start PROD imports-->'
               },
               {
-                  pattern: 'end PROD imports-->',
+                  pattern: ' end PROD imports-->',
                   replacement: '<!--end PROD imports-->'
               },
               {
                   pattern: '<!--start DEV imports-->',
-                  replacement: '<!--start DEV imports'
+                  replacement: '<!--start DEV imports '
               },
               {
                   pattern: '<!--end DEV imports-->',
-                  replacement: 'end DEV imports-->'
+                  replacement: ' end DEV imports-->'
               }
           ]
         }
