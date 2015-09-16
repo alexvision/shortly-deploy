@@ -3,18 +3,18 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     //DUPLICATED FUNCTIONALITY WITH UGLIFY
-    // concat: {
-      // options: {
-      //   separator: ';'
-      // },
+    concat: {
+      options: {
+        separator: ';'
+      },
 
-      // dist: {
-      //   src: [
-      //     'public/lib/*.js'
-      //   ],
-      //   dest: 'prod/lib/production.js'
-      // }
-    // },
+      dist: {
+        src: [
+          'public/lib/*.js'
+        ],
+        dest: 'prod/lib/production.js'
+      }
+    },
 
     mochaTest: {
       test: {
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'prod/lib/production.min.js': ['public/lib/backbone.js', 'public/lib/handlebars.js', 'public/lib/jquery.js', 'public/lib/underscore.js' ]
+          'prod/lib/production.min.js': 'prod/lib/production.js'
         }
       }
     },
@@ -137,6 +137,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-string-replace');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
@@ -164,8 +165,9 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
-    'uglify',
+    'concat',
     'cssmin',
+    'uglify',
     'string-replace'
   ]);
 
