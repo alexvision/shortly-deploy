@@ -1,5 +1,5 @@
-var db = require('../config');
-var crypto = require('crypto');
+// var db = require('../config');
+// var crypto = require('crypto');
 
 // var Link = db.Model.extend({
 //   tableName: 'urls',
@@ -16,4 +16,4 @@ var crypto = require('crypto');
 //   }
 // });
 
-// module.exports = Link;
+// // module.exports = Link;
