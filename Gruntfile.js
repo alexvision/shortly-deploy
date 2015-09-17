@@ -125,8 +125,7 @@ module.exports = function(grunt) {
         command:[ 
         'git add .',
         'git commit -m "AUTOMATED DEPLOYMENT TO PRODUCTION"',
-        'git push azure master',
-        'asdf1234'
+        'git push azure master'
         ].join('&&')
       }
     },

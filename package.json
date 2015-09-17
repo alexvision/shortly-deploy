@@ -27,7 +27,8 @@
     "grunt-string-replace": "^1.2.0",
     "knex": "~0.5.7",
     "mocha": "^1.17.1",
-    "mongoose": "~3.8.8",
+    "mongodb": "^2.0.43",
+    "mongoose": "^3.8.35",
     "request": "^2.34.0",
     "sqlite3": "~3.0.10"
   },
