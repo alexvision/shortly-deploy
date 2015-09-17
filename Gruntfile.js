@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'min/production.min.js': ['public/lib/underscore.js', 'public/lib/jquery.js', 'public/lib/handlebars.js', 'public/lib/backbone.js' ]
+          'public/min/production.min.js': ['public/lib/underscore.js', 'public/lib/jquery.js', 'public/lib/handlebars.js', 'public/lib/backbone.js' ]
         }
       }
     },
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
       },
       build: {
         files: {
-          'min/style.min.css': 'public/style.css'
+          'public/min/style.min.css': 'public/style.css'
         }
       }
     },

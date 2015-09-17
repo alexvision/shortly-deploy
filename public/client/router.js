@@ -1,4 +1,4 @@
-cd .Shortly.Router = Backbone.Router.extend({
+Shortly.Router = Backbone.Router.extend({
   initialize: function(options){
     this.$el = options.el;
   },
